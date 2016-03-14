@@ -1,0 +1,224 @@
+
+#######################
+### Common snippets ###
+#######################
+
+global !p
+def fileDebut(fn):
+	return fn.split(".")[0]
+endglobal
+
+snippet cl "console.log(...)" b
+console.log($1);$0
+endsnippet
+
+snippet fun "function with dynamic docblock" b
+`!p
+# Currently Ultisnips does not support dynamic tabstops, so we cannot add
+# tabstops to the datatype for these param tags until that feature is added.
+def formatTag(argument):
+	return " * @param {{}} {0}".format(argument)
+
+arguments = t[2].split(',')
+arguments = [argument.strip() for argument in arguments if argument]
+
+if len(arguments):
+	tags = map(formatTag, arguments)
+	snip.rv = "/**"
+	for tag in tags:
+		snip += tag
+	snip += ' */'
+	snip += ''
+else:
+	snip.rv = ''
+`${1}: function(${2}) {
+	${0:${VISUAL}}
+},
+endsnippet
+
+snippet cc "createClass" b
+var ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = React.createClass({
+	/**
+	 * @return {Object}
+	 */
+	render: function() {
+		return (
+			$0
+		);
+	}
+});
+
+module.exports = $1;
+endsnippet
+
+#######################
+### Meteor snippets ###
+#######################
+
+snippet "js|act" "Log Activity" rb
+logActivite(${1:Action}, ${2:Params});$0
+endsnippet
+
+snippet "js|render" "Add Rendered for template" rb
+//rendered for template "${1:`!p snip.rv=fileDebut(fn)`}":
+Template['$1'].onRendered(function(){
+	$0
+});
+
+endsnippet
+snippet "js|helpers" "Add Helpers for template" rb
+Template['${1:`!p snip.rv=fileDebut(fn)`}'].helpers({
+	"${2:helperName}"(${3:args}){
+		$0
+	}
+});
+
+endsnippet
+snippet "js|events" "Add events for template" rb
+Template['${1:`!p snip.rv=fileDebut(fn)`}'].events({
+	"click ${2:button}"(e, tpl){
+		$0
+	}
+});
+
+endsnippet
+snippet "js|auto|autohooks" "Add autoform hooks" rb
+//Hooks for form "$1"
+AutoForm.hooks({
+	${1:`!p snip.rv=fileDebut(fn).capitalize()`Form}: {
+		onSuccess: function(err, res){
+			//console.log("form success: ", arguments, this.docId);
+			Router.go("${2:`!p snip.rv=fileDebut(fn)`}", {_id: this.docId})
+		}
+	}
+});
+
+endsnippet
+
+snippet "js|formdel" "Add Delete function" rb
+"click .delete": function(e, tpl){
+	console.log("Delete $1: ", this, arguments);
+	${1:Collection}.remove({_id: tpl.data.$1._id}, function(err){
+		if(err) popError(err);
+		else Router.go("${2:`!p snip.rv=t[1].lower()`}");
+	});
+}
+$0
+endsnippet
+
+snippet "js|routergo" "Add Router Go Function - simple" rb
+"click ${1:Element}": function(){
+	Router.go("${2:Dest}");
+}$0
+endsnippet
+snippet "js|routergo" "Add Router Go Function - Back" rb
+"click ${1:.back}, click ${2:.cancel}": function(){
+	Router.go("${3:`!p snip.rv=fileDebut(fn)`}");
+}$0
+endsnippet
+snippet "js|routergo" "Add Router Go Function - With ID" rb
+"click ${1:Element}": function(e, tpl){
+	Router.go("${2:`!p snip.rv=fileDebut(fn)`_edit}", {_id: $(e.currentTarget).data("id")});
+}$0
+endsnippet
+snippet "js|routergo" "Add Router Go Function - Delete" rb
+"click ${1:.delete}": function(e, tpl){
+	//console.log("Delete: ", this, arguments);
+	${2:`!p snip.rv=fileDebut(fn).capitalize()`}({_id: tpl.data.doc._id}, function(err){
+		if(err) popError(err);
+		else Router.go("${3:`!p snip.rv=fileDebut(fn)`}");
+	});
+}$0
+endsnippet
+
+snippet "js|call" "Insert Meteor Call Method" rb
+Meteor.call("${1:Method}", function(err, res){
+	$0
+});
+endsnippet
+
+snippet "js|ses" "Insert Session Set" rb
+Session.set("${1:key}", ${2:value});
+$0
+endsnippet
+snippet "js|seg" "Insert Session Get" rw
+Session.get("${1:key}")
+endsnippet
+
+##################
+
+snippet mset "Meteor settings" w
+Meteor.settings.
+endsnippet
+snippet mid "Meteor ID" w
+Meteor.userId()
+endsnippet
+snippet lg "Show current language" w
+TAPi18n.getLanguage()
+endsnippet
+snippet trad "Translate word" w
+TAPi18n.__("${1:trad}")
+endsnippet
+snippet tap "Translate word" w
+TAPi18n.__("${1:trad}")
+endsnippet
+
+snippet "ad|isadm" "AD - isAdmin" rw
+AD.isAdmin(${1:this.userId})$0
+endsnippet
+snippet "ad|issup" "AD - isSupport" rw
+AD.isSupport(${1:this.userId})$0
+endsnippet
+snippet "ad|isins" "AD - isInstall" rw
+AD.isInstall(${1:this.userId})$0
+endsnippet
+snippet "ad|gl" "AD - groupList" rw
+AD.groupList(${1:this.userId})$0
+endsnippet
+snippet "ad|gpfg" "AD - getParksForGroup" rw
+AD.getParksForGroup(${1:ParkList}, ${2:groupName})$0
+endsnippet
+snippet "ad|gpfu" "AD - getParksForUser" rw
+AD.getParksForUser(${1:this.userId})$0
+endsnippet
+snippet "ad|cr" "AD - checkRight" rw
+AD.checkRight(${1:group}, ${2:right})$0
+endsnippet
+snippet "ad|uc" "AD - userCan" rw
+AD.userCan(${1:right})$0
+endsnippet
+
+#Schema
+
+snippet "sch|sip" "Schema - IP" rb
+${1:name}: {
+	type  : String,
+	label : getLabel("${2:`!p snip.rv = fileDebut(fn)`}", "$1"),
+	regEx : SimpleSchema.RegEx.IPv4
+},
+endsnippet
+snippet "sch|st" "Schema - String" rb
+${1:name}: {
+	type   : String,
+	label  : getLabel("${2:`!p snip.rv = fileDebut(fn)`}", "$1")
+},
+endsnippet
+snippet "sch|sta" "Schema - Array of String" rb
+${1:name}: {
+	type   : [String],
+	label  : getLabel("${2:`!p snip.rv = fileDebut(fn)`}", "$1")
+},
+endsnippet
+snippet "sch|snu" "Schema - Number" rb
+${1:name}: {
+	type   : Number,
+	label  : getLabel("${2:`!p snip.rv = fileDebut(fn)`}", "$1")
+},
+endsnippet
+snippet "sch|sop" "Schema - Options" rb
+${1:name}: {
+	type   : String,
+	label  : getLabel("${2:`!p snip.rv = fileDebut(fn)`}", "$1"),
+	allowedValues: [${3:Quote and Coma separated values}]
+},
+endsnippet

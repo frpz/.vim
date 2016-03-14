@@ -1,0 +1,38 @@
+#priority -50
+
+snippet s "String" w
+"${1:key}": "${2:value}"$0
+endsnippet
+snippet s, "String" w
+"${1:key}": "${2:value}",$0
+endsnippet
+
+snippet n "number" w
+"${1:key}": ${0:value}
+endsnippet
+snippet n, "number" w
+"${1:key}": ${2:value},$0
+endsnippet
+
+snippet a "Array" w
+[
+	${VISUAL}$0
+]
+endsnippet
+
+snippet a, "Array" w
+[
+	${VISUAL}$0
+],
+endsnippet
+
+snippet o "Object" w
+{
+	${VISUAL}$0
+}
+endsnippet
+snippet o, "Object" w
+{
+	${VISUAL}$0
+},
+endsnippet

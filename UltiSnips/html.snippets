@@ -1,0 +1,348 @@
+##################
+### Basic HTML ###
+##################
+
+global !p
+def fileDebut(fn):
+	return fn.split(".")[0]
+endglobal
+
+###############
+
+snippet htmltable "XHTML <table>" w
+<table border="${1:0}" class="${2}">
+	<tr><th>${3:Header}</th></tr>
+	<tr><td>${0:Data}</td></tr>
+</table>
+endsnippet
+
+snippet a "Link" w
+<a href="${1:http://www.${2:url.com}}"${3: target="_blank"}>${4:Anchor Text}</a>
+endsnippet
+
+snippet p "paragraph" w
+<p>$0</p>
+endsnippet
+
+snippet li "list item" w
+<li>$0</li>
+endsnippet
+
+snippet ul "unordered list" w
+<ul>
+$0
+</ul>
+endsnippet
+
+snippet td "table cell" w
+<td>$1</td>$0
+endsnippet
+
+snippet th "table header" w
+<th>$1</th>$0
+endsnippet
+
+snippet tr "table row" w
+<tr>$0</tr>
+endsnippet
+
+snippet htmltitle "XHTML <title>" w
+<title>${1:`!p snip.rv = snip.basename or "Page Title"`}</title>
+endsnippet
+
+snippet fieldset "Fieldset" w
+<fieldset id="${1/[\w\d]+|( )/(?1:_:\L$0\E)/g}" ${2:class="${3:}"}>
+	<legend>$1</legend>
+	$0
+</fieldset>
+endsnippet
+
+snippet div "regular div" w
+<div class="${1:row|column}">
+	$0
+</div>
+endsnippet
+
+########################
+### Semantic UI HTML ###
+########################
+
+snippet ui "Semantic UI - Template" b
+{{> ${1:templateName} ${2:param}="$3"}}$0
+endsnippet
+
+snippet "ui|test" "Semantic UI test" rb
+{{> test element}}
+endsnippet
+
+snippet "ui|title" "Semantic UI - Title Full Width" rb
+<div class="ui clearing top attached segment">
+	<h3 class="pull-left back">
+		<i class="${1:icon} icon"></i> {{_ "menu.${2:titre}"}}
+	</h3>
+</div>
+endsnippet
+
+snippet "ui|header|thead" "Semantic UI - Header with toggle next" rw
+{{> ui_header titre="${1:`!p snip.rv=fileDebut(fn)`}" block=${2:false} startOpen=${3:false} noToggle=${4:false}}}
+endsnippet
+
+snippet "ui|header|headericon" "Semantic UI - h3 header with icon" rw
+{{> ui_header_icon${2: _head="${1:_head}"}${4: head="${3:head}"} icon="${5:icon}" ${7: class="${6:class}"} }}
+endsnippet
+
+snippet "ui|header|segheader" "Semantic UI - Header attached to segment" rw
+{{> ui_seg_header${2: _head="${1:_head}"}${4: head="${3:head}"}${6: _content="${5:_content}"}${8: content="${7:content}"} }}
+endsnippet
+
+snippet ui "Semantic UI - Search " b
+{{> ui_filter class="${1:pull-right}" tabName="${2:tabName}" fields="${3:FieldsComaSep}"}}
+endsnippet
+
+snippet "ui|card" "Semantic UI - Card" rw
+{{> ui_card icon="${1:icon}"${3: image="${2:image.jpg}"}${5: head="${4:head}"}${7: _head="${6:_head}"}${9: meta="${8:meta}"}${11: _meta="${10:_meta}"}${13: desc="${12:desc}"}${15: _desc="${14:_desc}"}${17: extra="${16:extra}"} }}
+endsnippet
+snippet "ui|cardhtml" "Semantic UI - Card" rb
+<div class="card">
+	<div class="content">
+		${1:<i class="right floated ${2:like} icon"></i>}
+		${3:<img class="right floated mini ui image" src="${4:image.jpg}">}
+		<div class="header">
+			${5:Header}
+		</div>
+		<div class="meta">
+			${6:meta}
+		</div>
+		<div class="description">
+			${7:Description}
+		</div>
+	</div>
+${8:	<div class="extra content">
+	<div class="ui two buttons">
+		<div class="ui basic green button">${9:OK}</div>
+		<div class="ui basic red button">${10:NOK}</div>
+	</div>
+ </div>}
+</div>
+endsnippet
+snippet "ui|cards" "Semantic UI - Card Group" rb
+<div class="ui cards">
+	${1:${VISUAL}}
+</div>
+endsnippet
+
+#Forms
+snippet "ui|table" "Semantic UI - Table list" rb
+{{#ui_table tabName="${1:tabName}" head="${2:name1,name2}"${3: i18n="${4:`!p snip.rv = fn.split('.')[0].capitalize()`}"} class="${5:bottom attached tpoint compact}" nosort=${6:true} copyLabel=${7:true}}}
+	{{#each ${8:`!p snip.rv = fn.split('.')[0].capitalize()`}}}
+		<tr class="list" data-id="{{_id}}">`!p
+def formatTag(argument):
+	return "				<td>{{{{{0}}}}}</td>".format(argument)
+arguments = t[2].split(',')
+arguments = [argument.strip() for argument in arguments if argument]
+
+if len(arguments):
+	tags = map(formatTag, arguments)
+	for tag in tags:
+		snip += tag
+else:
+	snip.rv = ''
+`
+		</tr>
+	{{else}}
+		{{> ui_nodata col=`!p snip.rv = len(t[2].split(','))`}}
+	{{/each}}
+{{/ui_table}}
+endsnippet
+
+snippet ui "Semantic UI - AutoForm" b
+{{#autoForm collection="${1:Collection}" id="${2:id}Form" type=type doc=doc}}
+	<div class="fields">
+		${0}
+	</div>
+	{{#if equals type "insert"}}
+		{{> ui_addorcancel add="`!p snip.rv=t[2].lower()`_add"}}
+	{{else}}
+		{{> ui_saveorcancelordelete save="`!p snip.rv=t[2].lower()`_edit" delete="`!p snip.rv=t[2].lower()`_remove"}}
+	{{/if}}
+{{/autoForm}}
+endsnippet
+
+snippet "ui|quick" "Semantic UI - quickField for autoForm" rb
+{{> afQuickField name="${1:name}"${2: formgroup-class="${3:width} wide field"}}}
+endsnippet
+
+snippet "ui|formbut" "Semantic UI - Long normal Button" rb
+{{> ui_longbut pos="${1:top}" class=${2:class} icon="${3:icon}" text="${4:text}"}}$0
+endsnippet
+snippet "ui|formbut" "Semantic UI - Long Add Button" rb
+{{> ui_longadd pos="${1:top}" park=${2:park} add="${3:`!p snip.rv = fn.split('.')[0]`}_add"}}$0
+endsnippet
+
+snippet "ui|formbut" "Semantic UI - Small Button" rw
+{{> ui_smallbut class="${1}" icon="${2:icon}" text="${3:TextButton}"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Small OK Button" rw
+{{> ui_smallOKbut class="${1}" text="${3:TextButton}"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Button: Clone" rw
+{{> ui_clone${1: park=${2:park}} add="${3:name}_add"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Button: Add or Cancel" rb
+{{> ui_addorcancel park=${1:park} add="${2:name}_add"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Button: Save" rw
+{{> ui_save park=${1:park} save="${2:name}_edit" class="${3:class}"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Button: Save or Cancel" rb
+{{> ui_saveorcancel park=${1:park} save="${2:name}_edit"}}
+endsnippet
+snippet "ui|formbut" "Semantic UI - Button: Save or Cancel or remove" rb
+{{> ui_saveorcancelordelete park=${1:park} save="${2:name}_edit" delete="$2_remove"}}
+endsnippet
+
+snippet "ui|but|buttiny" "Semantic UI - Button - Tiny" r
+<button class="mini ui button ${1:class}">
+	$0
+</button>
+endsnippet
+snippet "ui|but|buttiny" "Semantic UI - Button - Large" r
+<button class="large ui button ${1:class}">
+	$0
+</button>
+endsnippet
+
+snippet "ui|group" "Semantic UI - group pour forms" rb
+<div class="field">
+	<h4 class="ui top attached block header">
+		${1:Titre}
+	</h4>
+	<div class="ui secondary bottom attached segment" style=" padding-top: 1px; ">
+		${2:Content}
+	</div>    
+</div>
+endsnippet
+
+snippet "ui|temp" "Template HTML - form redirect - ADD" rb
+<template name="${1:`!p snip.rv=fileDebut(fn)`}_add">
+	<div class="ui segment">
+		<h3 class="pointer">
+			<i class="${2:icon} icon"></i> {{_ "${3:menu.$1}"}} - {{_ "new"}}
+		</h3>
+	</div>
+	<div class="ui segment">
+		{{> $1_form type="insert"}}
+	</div>
+</template>
+$0
+endsnippet
+snippet "ui|temp" "Template HTML - form redirect - EDIT" rb
+<template name="${1:`!p snip.rv=fileDebut(fn)`}_edit">
+	<div class="ui segment">
+		<div class="ui huge breadcrumb">
+		  <div class="pointer section back"><i class="${2:icon} icon"></i> {{_ "${3:menu.$1}"}}</div>
+		  <i class="right chevron icon divider"></i>
+		  <div class="active section">{{${4:`!p snip.rv=fileDebut(fn).capitalize()`}.${5:FieldName}}}</div>
+		</div>
+	</div>
+	<div class="ui segment">
+		{{> $1_form type="update" doc=$4}}
+	</div>
+</template>
+$0
+endsnippet
+
+### DIVERS ###
+
+snippet t "Basic any html tag"
+<${1:div}>
+	$3
+</${1/(\w+).*/$1/}>
+$0
+endsnippet
+
+snippet par "param"
+${1:param}="${2:value}" $0
+endsnippet
+
+#templates
+snippet "ui|temp" "Template HTML - Vide" rb
+<template name="${1:templateName}">
+	$0
+</template>
+endsnippet
+
+snippet "ui|seg" "Div Segment" rb
+<div class="ui segment">
+	$0
+</div>
+endsnippet
+
+snippet > "Insert blaze template" b
+{{> ${1:templateName} $2}}
+$0
+endsnippet
+
+snippet "ui|mark" "Insert markdown" rb
+{{#markdown}}
+	$0
+{{/markdown}}
+endsnippet
+
+snippet "ui|field" "Fields div for from" rb
+<div class="${1:num }field${2:s}">
+	$0
+</div>
+endsnippet
+
+snippet "ui|_" "Insert i18n tag" rw
+{{_ "${1:`!p snip.rv=fileDebut(fn)`}.${2:text}"}}
+endsnippet
+
+snippet "ui|icon" "Semantic UI - Icon" rw
+<i class="${1:icon} icon"></i> $0
+endsnippet
+snippet "ui|mi" "Item for Menu - Titre" rb
+<div class="item">
+   <h3 class="${1:pointer}">
+		<i class="${2:user} icon"></i> ${3:TitreMenu}
+	</h3>
+</div>
+$0
+endsnippet
+snippet "ui|mi" "Item for Menu - Link normal" rb
+<a class="item {{active '${1:route}'}}$2" href="/${3:lien}">
+	${4:Titre}
+</a>
+$0
+endsnippet
+snippet "ui|mi" "Item for Menu - Link avec Iron Router" rb
+{{#linkTo class="item" route='${1:routeName}' data=${2:params} query='${3:action=toto}'}}
+	<i class="${4:icon} icon"></i> {{_ "${5:`!p snip.rv=fileDebut(fn)`}.menu.${6:toto}"}}
+{{/linkTo}}
+$0
+endsnippet
+
+snippet te "Titelize in the Transformation"
+${1:a text}
+${1/\w+\s*/\u$0/g}
+endsnippet
+
+snippet "ui|warn" "warning" rw
+{{> ui_warning head=(_ "${1:Header}") content=(_ "${2:Contenat}")}}
+$0
+endsnippet
+
+snippet "ui|mess" "Semantic UI - Message Icon" rw
+{{> ui_message class="${1:success|error}" icon="${2:icon}" _head="`!p snip.rv=fileDebut(fn)`.${3:head}" _content="`!p snip.rv=fileDebut(fn)`.${4:content}"}}
+endsnippet
+
+snippet "ui|smallmess" "Semantic UI - Small Message " rw
+{{> ui_smallmessage class="${1:floating|success|error}" content="`!p snip.rv=fileDebut(fn)`.${2:content}"}}
+endsnippet
+
+snippet if "IF" w
+{{#if ${1:test}}}
+	$0
+{{/if}}
+endsnippet
