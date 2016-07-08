@@ -28,7 +28,7 @@ Plugin 'jonathanfilip/vim-lucius.git'
 Plugin 'jistr/vim-nerdtree-tabs.git'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
+"Plugin 'airblade/vim-gitgutter'
 Plugin 'jQuery'
 Plugin 'markgandolfo/nerdtree-fetch.vim'
 Plugin 'kshenoy/vim-signature.git'
@@ -137,7 +137,7 @@ vnoremap gb gT
 inoremap <M-k> <Up>
 inoremap <M-j> <Down>
 inoremap <M-l> <Right>
-inoremap <M-h> <Left>
+"inoremap <M-h> <Left>
 
 "on se balade entre les tabs avec alt u et i
 nnoremap <M-i> gt
@@ -171,10 +171,14 @@ au TabLeave * let g:lasttab = tabpagenr()
 "Tabularize
 nnoremap <leader>a :Tabularize<Space>/
 vnoremap <leader>a :Tabularize<Space>/
-nnoremap <leader>: :Tabularize<Space>:<CR>
-vnoremap <leader>: :Tabularize<Space>:<CR>
-nnoremap <leader>= :Tabularize<Space>=<CR>
-vnoremap <leader>= :Tabularize<Space>=<CR>
+nnoremap <leader>: :Tabularize<Space>/^[^:]*\zs:/l0l1<CR>
+vnoremap <leader>: :Tabularize<Space>/^[^:]*\zs:/l0l1<CR>
+"nnoremap <leader>: :Tabularize<Space>/:<CR>
+"vnoremap <leader>: :Tabularize<Space>/:<CR>
+nnoremap <leader>= :Tabularize<Space>/^[^=]*\zs=<CR>
+vnoremap <leader>= :Tabularize<Space>/^[^=]*\zs=<CR>
+"nnoremap <leader>= :Tabularize<Space>/=<CR>
+"vnoremap <leader>= :Tabularize<Space>/=<CR>
 nnoremap <leader>> :Tabularize<Space>/=><CR>
 vnoremap <leader>> :Tabularize<Space>/=><CR>
 
