@@ -230,6 +230,9 @@ nnoremap <leader>fj :%g/^[^(){}=" ]*: \(function.*\){/ normal! f{zf%za<CR>zM<CR>
 "Fold all comments in file
 nnoremap <leader>fc :%g/\/\*/ normal! $F/zf]/j<CR>``
 
+"Fold all group that has a } at the beginning of the line
+nnoremap <leader>f} :%g/^}/ normal! zfaB<CR>``zM<CR>
+
 "Fold all templates
 nnoremap <leader>ft :%g/<template/ normal! zfat<CR>``
 nnoremap <leader>fT :%g/Template.*{/ normal! f{zf%za<CR>``
