@@ -205,6 +205,9 @@ set spelllang=fr
 "set spell
 nnoremap <leader>o :set spell! spell?<CR>
 
+"Pour bien formater le json
+nnoremap <leader>j :%!python -m json.tool<CR>
+
 "/Mappings Leader ->
 
 "Folds <-
