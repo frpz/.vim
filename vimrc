@@ -71,7 +71,7 @@ color desert
 set background=dark
 set nohlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
-set sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize
+set sessionoptions=blank,buffers,curdir,folds,help,tabpages,resize,winsize
 
 set <S-F9>=[33~
 set <S-F10>=[34~
