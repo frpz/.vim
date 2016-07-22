@@ -208,6 +208,13 @@ nnoremap <leader>o :set spell! spell?<CR>
 "Pour bien formater le json
 nnoremap <leader>j :%!python -m json.tool<CR>
 
+"pour afficher des caractères en grand (autres fonts: slant, shadow, mono9, mini, lean, ivrit, emboss, big )
+nnoremap <leader>a :read !toilet --filter crop -f pagga <space>
+nnoremap <leader>A :read !toilet --filter crop -f mono12 <space>
+
+"pour autocomplete en fonction du language (ctrl n et ctrl p pour naviger):
+inoremap <c-space> <c-x><c-o>
+imap <C-@> <C-Space>
 "/Mappings Leader ->
 
 "Folds <-
