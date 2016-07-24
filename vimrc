@@ -169,8 +169,8 @@ nmap <Leader>n :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 "Tabularize
-nnoremap <leader>a :Tabularize<Space>/
-vnoremap <leader>a :Tabularize<Space>/
+nnoremap <leader>r :Tabularize<Space>/
+vnoremap <leader>r :Tabularize<Space>/
 nnoremap <leader>: :Tabularize<Space>/^[^:]*\zs:/l0l1<CR>
 vnoremap <leader>: :Tabularize<Space>/^[^:]*\zs:/l0l1<CR>
 "nnoremap <leader>: :Tabularize<Space>/:<CR>
