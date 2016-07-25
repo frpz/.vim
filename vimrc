@@ -86,6 +86,12 @@ set novisualbell
 "caracteres au debut de chaque ligne wrappées:
 set showbreak=\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \|\ 
 
+"Pour afficher le nom du fichier en title de putty:
+set t_ts=]2;
+set t_fs=\\
+set title
+autocmd BufEnter * let &titlestring = "[".expand("%:t") ."] " . v:this_session . ""
+
 "/parmatres globaux ->
 
 "Assignation des touches Fx <-
@@ -208,9 +214,9 @@ nnoremap <leader>o :set spell! spell?<CR>
 "Pour bien formater le json
 nnoremap <leader>j :%!python -m json.tool<CR>
 
-"pour afficher des caractères en grand (autres fonts: slant, shadow, mono9, mini, lean, ivrit, emboss, big )
-nnoremap <leader>a :read !toilet --filter crop -f pagga <space>
-nnoremap <leader>A :read !toilet --filter crop -f mono12 <space>
+"pour afficher des caractères en grand (autres fonts: standard, slant, shadow, mono9, mini, lean, ivrit, emboss, big )
+nnoremap <leader>a :read !toilet --filter crop -w 150 -f pagga <space>
+nnoremap <leader>A :read !toilet --filter crop -w 150 -f mono9 <space>
 
 "pour autocomplete en fonction du language (ctrl n et ctrl p pour naviger):
 inoremap <c-space> <c-x><c-o>
