@@ -33,6 +33,7 @@ Plugin 'jQuery'
 Plugin 'markgandolfo/nerdtree-fetch.vim'
 "Plugin 'kshenoy/vim-signature.git'
 Plugin 'drmikehenry/vim-fixkey.git'
+Plugin 'isRuslan/vim-es6'
 "/Fin de la liste des plugins
 call vundle#end()            " required
 filetype plugin indent on    " required
