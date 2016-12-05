@@ -55,6 +55,7 @@ set modeline
 sy on
 set noai
 set mouse=a
+set ttymouse=xterm2
 set nu
 set showcmd
 set ts=3
