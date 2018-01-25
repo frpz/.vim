@@ -94,6 +94,10 @@ set t_fs=\\
 set title
 autocmd BufEnter * let &titlestring = "[".expand("%:t") ."] " . v:this_session . ""
 
+"Pour vérifier régulièrement que le fichier n'a pas été modifié par un autre
+"programme:
+au CursorHold * checktime
+
 "/parmatres globaux ->
 
 "Assignation des touches Fx <-
