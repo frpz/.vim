@@ -98,6 +98,13 @@ autocmd BufEnter * let &titlestring = "[".expand("%:t") ."] " . v:this_session .
 "programme:
 au CursorHold * checktime
 
+"Pour pouvoir utiliser la souris après la 220ème colonne:
+if has("mouse_sgr")
+	set ttymouse=sgr
+else
+	set ttymouse=xterm2
+end
+
 "/parmatres globaux ->
 
 "Assignation des touches Fx <-
