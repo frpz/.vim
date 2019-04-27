@@ -170,6 +170,9 @@ inoremap <M-l> <Right>
 nnoremap <M-i> gt
 nnoremap <M-u> gT
 
+"pour quitter le terminal avec esc
+tnoremap <Esc> <C-\><C-n>
+
 "Fin assignation des touches diverses ->
 
 "Mappings Leader <-
