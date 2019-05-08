@@ -222,3 +222,132 @@ ${1:name}: {
 	allowedValues: [${3:Quote and Coma separated values}]
 },
 endsnippet
+
+
+##############################
+### React/Meteor snippets ###
+############################
+
+snippet "re|cdm" "Component did mount" rb
+componentDidMount() {
+	${1}
+}$0
+endsnippet
+
+snippet "re|cdup" "Component did update" rb
+componentDidUpdate(prevProps, prevState) {
+	${1}
+}$0
+endsnippet
+
+snippet "re|cwm" "Component will mount" rb
+componentWillMount() {
+	${1}
+}$0
+endsnippet
+
+snippet "re|cwr" "Component will receive props" rb
+componentWillReceiveProps(nextProps) {
+	${1}
+}$0
+endsnippet
+
+snippet "re|cwun" "Component will unmount" rb
+componentWillUnmount() {
+	${1}
+}$0
+endsnippet
+
+snippet "re|cwu" "Component will update" rb
+componentWillUpdate(nextProps, nextState) {
+	${1}
+}$0
+endsnippet
+
+snippet "re|funco" "create functional component" rb
+import React from 'react'
+
+export default props => <div>${1}</div>
+$0
+endsnippet
+
+snippet "re|rcc" "create class component" rb
+import { Meteor  } from 'meteor/meteor'
+import React, { Component } from 'react'
+
+export default class ${1:ClassComponent} extends Component {
+	constructor(props) {
+		super(props)
+		${2:this.state = {
+			$3
+		}}
+	}
+
+	$0
+	render() {
+		return (
+			${4:<div>
+				$5
+			</div>}
+		)
+	}
+}
+
+endsnippet
+
+snippet "re|ic" "Import component" rb
+import $2 from '$1' $0
+endsnippet
+
+snippet "re|sst" "set state" rb
+this.setState({
+	${1}: ${2}
+});$0
+endsnippet
+
+snippet "re|pro" "get property" ri
+this.props.${1}
+endsnippet
+
+snippet "re|st" "get state" ri
+this.state.${1}
+endsnippet
+
+snippet "re|impL" "import Link from react-router" rb
+import { Link } from 'react-router-dom'
+endsnippet
+
+snippet "re|link" "add react-router link" ri
+<Link to="${1}" ${2:className="${3}"}>
+	$4
+</Link>$0
+endsnippet
+
+
+snippet "re|test" "Create Test file" rb
+import React from 'react';
+import { shallow } from 'enzyme';
+import renderer from 'react-test-renderer' 
+
+import ${2:`!p snip.rv=fileDebut(fn).capitalize()`} from './${1:`!p snip.rv=fn.replace('.test', '') + 'x'`}'
+
+let props = { }
+
+const compTest = (pr) => () => {
+	const tree = renderer
+		.create(<$2 {...pr}/>)
+		.toJSON()
+	expect(tree).toMatchSnapshot()
+}
+
+describe('<$2 />', () => {
+	const comp = shallow(<$2 {...props} />);
+	it('<$2 /> should render', () => {
+		expect(comp.exists()).toBe(true);
+	});
+
+	it("vide match snapshot", compTest({}))
+
+});
+
+endsnippet
