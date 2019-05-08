@@ -171,7 +171,9 @@ nnoremap <M-i> gt
 nnoremap <M-u> gT
 
 "pour quitter le terminal avec esc
-tnoremap <Esc> <C-\><C-n>
+if has('nvim')
+	tnoremap <Esc> <C-\><C-n>
+endif
 
 "Fin assignation des touches diverses ->
 
