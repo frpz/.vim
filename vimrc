@@ -46,13 +46,13 @@ filetype plugin indent on    " required
 "Params pour airline <-
 set laststatus=2 "pour corriger le bug sur airline
 "let g:airline_theme='term'
-"let g:airline_theme='wombat'
+let g:airline_theme='wombat'
 "let g:airline_theme='violet'
 "let g:airline_theme='bubblegum'
 "let g:airline_theme='hybrid'
 "let g:airline_theme='kalisi'
-let g:airline_theme='murmur'
-"let g:airline_powerline_fonts = 1
+"let g:airline_theme='murmur'
+let g:airline_powerline_fonts = 1
 "set timeoutlen=50
 "Fin des params pour airline ->
 
