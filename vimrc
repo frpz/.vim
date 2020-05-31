@@ -162,6 +162,10 @@ inoremap <M-l> <Right>
 nnoremap <M-i> gt
 nnoremap <M-u> gT
 
+"map de ctrl-s (qui bloque le terminal):
+nnoremap <silent> <c-s> :update<cr>
+inoremap <silent> <c-s> <c-o>:update<cr>
+
 "Fin assignation des touches diverses ->
 
 "Mappings Leader <-
