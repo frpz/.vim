@@ -26,14 +26,18 @@ Plugin 'godlygeek/tabular.git'
 Plugin 'thomasbelin4/vim-jsdoc.git'
 Plugin 'jonathanfilip/vim-lucius.git'
 Plugin 'jistr/vim-nerdtree-tabs.git'
-"Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'airblade/vim-gitgutter'
 Plugin 'jQuery'
 Plugin 'markgandolfo/nerdtree-fetch.vim'
 "Plugin 'kshenoy/vim-signature.git'
-Plugin 'drmikehenry/vim-fixkey.git'
+if !has('nvim')
+	Plugin 'drmikehenry/vim-fixkey.git'
+endif
 Plugin 'isRuslan/vim-es6'
+Plugin 'mxw/vim-jsx'
+Plugin 'styled-components/vim-styled-components'
 "/Fin de la liste des plugins
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -42,10 +46,12 @@ filetype plugin indent on    " required
 "Params pour airline <-
 set laststatus=2 "pour corriger le bug sur airline
 "let g:airline_theme='term'
-"let g:airline_theme='kalisi'
-let g:airline_theme='wombat'
+"let g:airline_theme='wombat'
+"let g:airline_theme='violet'
 "let g:airline_theme='bubblegum'
 "let g:airline_theme='hybrid'
+"let g:airline_theme='kalisi'
+let g:airline_theme='murmur'
 "let g:airline_powerline_fonts = 1
 "set timeoutlen=50
 "Fin des params pour airline ->
@@ -55,7 +61,7 @@ set modeline
 sy on
 set noai
 set mouse=a
-set ttymouse=xterm2
+
 set nu
 set showcmd
 set ts=3
@@ -99,11 +105,13 @@ autocmd BufEnter * let &titlestring = "[".expand("%:t") ."] " . v:this_session .
 au CursorHold * checktime
 
 "Pour pouvoir utiliser la souris après la 220ème colonne:
-if has("mouse_sgr")
-	set ttymouse=sgr
-else
-	set ttymouse=xterm2
-end
+if !has('nvim')
+	if has("mouse_sgr")
+		set ttymouse=sgr
+	else
+		set ttymouse=xterm2
+	end
+endif
 
 "/parmatres globaux ->
 
@@ -165,6 +173,10 @@ nnoremap <M-u> gT
 "map de ctrl-s (qui bloque le terminal):
 nnoremap <silent> <c-s> :update<cr>
 inoremap <silent> <c-s> <c-o>:update<cr>
+"pour quitter le terminal avec esc
+if has('nvim')
+	tnoremap <Esc> <C-\><C-n>
+endif
 
 "Fin assignation des touches diverses ->
 

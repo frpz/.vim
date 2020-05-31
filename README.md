@@ -31,3 +31,13 @@ Pour désinstaller les packages qui ont été supprimés du vimrc:
 
 	 :BundleClean
 
+# NeoVim
+
+NeoVim est compatible avec la configuration de VIM.
+
+Pour l'activer, copiez ou linkez le fichier suivant:
+```bash
+mkdir -p ~/.config/nvim/
+cp ~/.vim/init.vim ~/.config/nvim/init.vim
+```
+
