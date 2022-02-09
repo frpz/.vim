@@ -38,6 +38,7 @@ endif
 Plugin 'isRuslan/vim-es6'
 Plugin 'mxw/vim-jsx'
 Plugin 'styled-components/vim-styled-components'
+Plugin 'prettier/vim-prettier'
 "/Fin de la liste des plugins
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -177,6 +178,8 @@ inoremap <silent> <c-s> <c-o>:update<cr>
 if has('nvim')
 	tnoremap <Esc> <C-\><C-n>
 endif
+
+map <A-F> :PrettierAsync<cr>
 
 "Fin assignation des touches diverses ->
 
