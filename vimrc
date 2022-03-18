@@ -39,6 +39,7 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'mxw/vim-jsx'
 Plugin 'styled-components/vim-styled-components'
 Plugin 'prettier/vim-prettier'
+"Plugin 'sbdchd/neoformat'
 "/Fin de la liste des plugins
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -113,6 +114,11 @@ if !has('nvim')
 		set ttymouse=xterm2
 	end
 endif
+
+""Prettier
+"let g:neoformat_try_node_exe=1
+""autocmd BufWritePre,TextChanged,InsertLeave *.[tj]s Neoformat
+"autocmd BufWritePre *.[tj]s Neoformat
 
 "/parmatres globaux ->
 
